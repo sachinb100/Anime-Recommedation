@@ -73,7 +73,6 @@ class AnimeSearchView(APIView):
                 genre, created = Genre.objects.get_or_create(name=genre_name)
                 genre_objects.append(genre)
 
-            # Save anime (only if not already saved)
             anime, created = Anime.objects.get_or_create(
                 title=title,
                 defaults={'description': description}
@@ -100,7 +99,6 @@ class AnimeRecommendationView(APIView):
         favorite_genres = preferences.favorite_genres.all()
         watched_anime = preferences.watched_anime.all()
 
-        # Call AniList API to get recommendations (adjust query based on user preferences)
         query = """
         query GetAnimeRecommendations($genreIds: [String]) { Media(genre_in: $genreIds) { id title { romaji english native } recommendations { edges { node { id  rating  }   } } } }
         """
